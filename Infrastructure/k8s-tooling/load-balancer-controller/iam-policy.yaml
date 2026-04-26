@@ -149,6 +149,8 @@ Resources:
           - Effect: Allow
             Action:
               - elasticloadbalancing:ModifyLoadBalancerAttributes
+              - elasticloadbalancing:DescribeListenerAttributes
+              - elasticloadbalancing:ModifyListenerAttributes
               - elasticloadbalancing:SetIpAddressType
               - elasticloadbalancing:SetSecurityGroups
               - elasticloadbalancing:SetSubnets
