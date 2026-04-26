@@ -59,6 +59,8 @@
                           {
                             "Effect": "Allow",
                             "Action": [
+                             "elasticloadbalancing:DescribeListenerAttributes",
+                              "elasticloadbalancing:ModifyListenerAttributes",
                               "elasticloadbalancing:AddListenerCertificates",
                               "elasticloadbalancing:AddTags",
                               "elasticloadbalancing:CreateListener",
