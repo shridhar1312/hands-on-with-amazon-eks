@@ -7,25 +7,60 @@ metadata:
     kubernetes.io/ingress.class: alb
     alb.ingress.kubernetes.io/group.name: my-group
     alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
 {{- if not .Values.ssl.enabled }}
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
 {{- else }}
     alb.ingress.kubernetes.io/ssl-redirect: '443'
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
 {{- end }}
-  labels:
-    app: nginx
+
 spec:
+  ingressClassName: alb
   rules:
     - http:
         paths:
-          - path: /*
-            pathType: ImplementationSpecific
+          - path: /
+            pathType: Prefix
             backend:
               service:
                 name: nginx-service
-                port: 
+                port:
                   number: 80
 {{- if .Values.ssl.enabled }}
       host: sample-app.{{ .Values.baseDomain }}
 {{- end }}
+
+
+#--------------------------------------------------------
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: services-ingress
+#   namespace: {{ .Release.Namespace }}
+#   annotations:
+#     kubernetes.io/ingress.class: alb
+#     alb.ingress.kubernetes.io/group.name: my-group
+#     alb.ingress.kubernetes.io/scheme: internet-facing
+# {{- if not .Values.ssl.enabled }}
+#     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
+# {{- else }}
+#     alb.ingress.kubernetes.io/ssl-redirect: '443'
+#     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
+# {{- end }}
+#   labels:
+#     app: nginx
+# spec:
+#   rules:
+#     - http:
+#         paths:
+#           - path: /*
+#             pathType: ImplementationSpecific
+#             backend:
+#               service:
+#                 name: nginx-service
+#                 port: 
+#                   number: 80
+# {{- if .Values.ssl.enabled }}
+#       host: sample-app.{{ .Values.baseDomain }}
+# {{- end }}
