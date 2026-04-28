@@ -28,7 +28,9 @@ echo "--- This could take around 10 minutes"
     # eksctl delete nodegroup --cluster eks-acg eks-node-group-spot-instances
 
     # # Create Fargate Profile
-    # eksctl create fargateprofile -f cluster.yaml
+
+    # ( cd Infrastructure/eksctl/04-fargate && eksctl create fargateprofile -f cluster.yaml )
+
 
 echo "*************************************************************"
 echo "********* READY FOR CHAPTER 5 - FINISHED AT $(date) *********"
